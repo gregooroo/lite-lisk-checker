@@ -29,6 +29,24 @@ Add nodes to `nodes` array in config.json every node should be configured:
 }
 ```
 
+#### Example
+```
+{
+      "id": "Testnet-snapshot-server",
+      "ip": "http://151.80.47.178", 
+      "port": 7000,
+      "network": "LSK_T", 
+      "checkForging": false
+}
+```
+
+## Set propose
+The idea behind this script was installing them on separate VPS instead machine with Lisk node. You can whitelist only this VPS IP in Lisk config.
+
+<strong>IMPORTANT</strong>
+
+To get forging status you have to whitelist IP from which checker is run.   
+
 ## Running
 ```
 pm2 start app.json
@@ -42,4 +60,4 @@ Install logrotate to save disk space:
 ```
 pm2 install pm2-logrotate
 ```
-### By using this software you agree to [license](https://github.com/biolypl/lite-lisk-checker/blob/master/LICENSE) 
+### By using this software you agree to [MIT license](https://github.com/biolypl/lite-lisk-checker/blob/master/LICENSE) 
