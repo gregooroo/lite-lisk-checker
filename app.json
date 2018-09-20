@@ -1,0 +1,9 @@
+{
+  "apps" : [{
+    "name" : "lite-lisk-checker",
+    "script" : "app.js",
+    "interpreter" : "node@8.2.1"
+  }]
+}
+
+

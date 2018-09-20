@@ -1,0 +1,20 @@
+{
+  "nodes": [
+    {
+      "id": "",
+      "ip": "",
+      "port": 8000,
+      "network": "LSK_M",
+      "checkForging": true
+    },
+    {
+      "id": "",
+      "ip": "",
+      "port": 7000,
+      "network": "LSK_T",
+      "checkForging": false
+    }
+  ],
+  "telegram" : "",
+  "interval": 1000
+}

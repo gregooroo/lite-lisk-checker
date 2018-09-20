@@ -1,0 +1,12 @@
+{
+  "networks": [
+    {
+      "name": "LSK_T",
+      "port": 7000
+    },
+    {
+      "name": "LSK_M",
+      "port": 8000
+    }
+  ]
+}

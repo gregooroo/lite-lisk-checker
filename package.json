@@ -1,0 +1,18 @@
+{
+  "name": "lite-lisk-checker",
+  "version": "0.0.1",
+  "description": "Monitor Lisk",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "lisk-elements": "^1.0.0",
+    "telebot": "^1.2.6"
+  },
+  "engines": {
+    "node": ">=8.2.1"
+  }
+}
