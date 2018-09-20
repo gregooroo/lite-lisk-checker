@@ -1,12 +1,15 @@
 {
   "name": "lite-lisk-checker",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Monitor Lisk",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "lisk"
+  ],
+  "author": "bioly",
   "license": "MIT",
   "dependencies": {
     "lisk-elements": "^1.0.0",
