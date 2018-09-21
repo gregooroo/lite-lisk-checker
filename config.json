@@ -16,5 +16,6 @@
     }
   ],
   "telegram" : "",
+  "telegramUserId": 1234567890 ,
   "interval": 1000
 }

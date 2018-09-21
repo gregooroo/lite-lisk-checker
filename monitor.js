@@ -1,5 +1,6 @@
 const lisk = require('lisk-elements');
 const {networks} = require('./networks.json');
+const {telegramUserId} = require('./config.json');
 const bot = require('./telegram');
 
 module.exports = class Monitor {
@@ -105,7 +106,7 @@ module.exports = class Monitor {
         // Send telegram message to user
         console.log("Error!: ", mssg, " Date: ", Date());
 
-        await bot.sendMessage('@dpos_watcher', mssg).catch(e => {
+        await bot.sendMessage(telegramUserId, mssg).catch(e => {
             console.log("bot error");
         });
 

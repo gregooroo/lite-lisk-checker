@@ -14,7 +14,12 @@ cd​ lite-lisk-checker && npm install
 ```
 
 ## Config
-Create telegram bot and add key to config.json `telegram`.
+Create telegram bot and add API key to config.json `telegram`. [Description](https://core.telegram.org/bots#3-how-do-i-create-a-bot) 
+
+Start talk (`/start` or`/hello` command) with your new bot and get `telegramUserId`, add this Id to config.json too.
+
+![Bot start](https://i.imgur.com/QHsTNQ0.jpg "Bot start")
+
 
 Set checking interval in seconds - `interval`.
 
