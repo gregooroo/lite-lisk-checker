@@ -2,19 +2,25 @@
 Lite Lisk checker is small bot utilizing [lisk-elements](https://github.com/LiskHQ/lisk-elements) and [Telegram bot - telebot](https://github.com/mullwar/telebot) to check syncing and optionally forging status of your Lisk nodes.
 
 It will automatically notify you if your Lisk node or server went down. However, it is not possible to restart, rebuild node or start forging with this bot.  
+
+## Features
+Continuously checking status of the nodes from config.json
+
+Interacting with the Telegram bot on request  
+
 ## Install
 Install [nvm](https://github.com/creationix/nvm) or other node.js manager
 
 ```
-nvm use 8.2.1
-
-git clone https://github.com/biolypl/lite-lisk-checker
+git clone https://github.com/biolypl/lite-lisk-checker && cd ​lite-lisk-checker 
  
-cd​ lite-lisk-checker && npm install
+nvm install 8.2.1 && nvm use 8.2.1 && npm install
 ```
 
 ## Config
 Create telegram bot and add API key to config.json `telegram`. [Description](https://core.telegram.org/bots#3-how-do-i-create-a-bot) 
+
+Launch the app with `node app.js` to get the `telegramUserId`
 
 Start talk (`/start` or`/hello` command) with your new bot and get `telegramUserId`, add this Id to config.json too.
 
@@ -52,8 +58,15 @@ The idea behind this script was installing them on separate VPS instead machine 
 
 To get forging status you have to whitelist IP from which checker is run.   
 
-## Running
+## Running 
 ```
+node app.js
+```
+Or start with pm2 process manager:
+
+```
+npm install pm2 -g
+
 pm2 start app.json
 ```
 ### Tips
