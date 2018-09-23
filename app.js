@@ -1,6 +1,4 @@
-const {nodes} = require('./config.json');
-const {interval} = require('./config.json');
-const {telegramUserId} = require('./config.json');
+const {nodes, interval, telegramUserId} = require('./config.json');
 const {networks} = require('./networks.json');
 const Node = require('./node.js');
 const Monitor = require('./monitor');
