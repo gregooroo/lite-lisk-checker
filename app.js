@@ -65,8 +65,8 @@ bot.on(['/list'], (msg) => {
     return;
   }
 
-  let reply;
-    nodesArray.forEach(node => reply = `ID: ${node.id} Forging watcher: ${node.checkForging ? "Enabled" : "Disabled"}`);
+  let reply = "";
+    nodesArray.forEach(node => reply += `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"} \r\n`);
     bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
 });
 
