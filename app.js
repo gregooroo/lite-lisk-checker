@@ -29,14 +29,14 @@ setInterval(() => {
     }));
 }, interval * 1000);
 
-const helpMessage = "/help - List the available commands \n" +
-    "/checkAll - Tick all nodes from config\n" +
-    "/list - List nodes IDs\n";
+const helpMessage = `/help - List the available commands
+/checkAll - Tick all nodes from config
+/list - List nodes IDs`
 //"/check ID_FROM_CONFIG - Checking status of node and forging if enabled"
 
 const authMessageError = "Seems you are not authorized to use this command :( Check your config file.";
 // Bot
-bot.on(['/start', '/hello'], (msg) => msg.reply.text('Welcome! Here is your user id, for the security add this to config.json field telegramUserId: ' + msg.from.id));
+bot.on(['/start', '/hello'], (msg) => msg.reply.text(`Welcome! Here is your user id, for the security add this to config.json field telegramUserId: ${msg.from.id}`));
 
 
 bot.on(['/help'], (msg) => {
@@ -63,9 +63,9 @@ bot.on(['/checkAll'], (msg) => {
 });
 bot.on(['/list'], (msg) => {
     if (msg.from.id === telegramUserId) {
-        let reply = "";
+        let reply;
         nodesArray.forEach(node => {
-            reply += "ID: " + node.id + " Forging: " + (node.checkForging ? "Enabled" : "Disabled") + "\n";
+            reply = `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"}`;
         });
         bot.sendMessage(telegramUserId, reply).catch(e => {
             console.log(e);
