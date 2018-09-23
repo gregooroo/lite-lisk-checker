@@ -94,8 +94,8 @@ module.exports = class Monitor {
 
                             });
                         } else {
-                            return serverId + " synced, height: " + tmpLiskData.data.data.height + " Forging: " + (forgingStatus.data.data[0].forging ? "Enabled" : "Disabled");
                             console.log(Date(), " ", this.nodes[i].ip, " forging enabled: ", forgingStatus.data.data[0].publicKey);
+                            return serverId + " synced, height: " + tmpLiskData.data.data.height + " Forging: " + (forgingStatus.data.data[0].forging ? "Enabled" : "Disabled");
                         }
                     }
                     return serverId + " synced, height: " + tmpLiskData.data.data.height;
