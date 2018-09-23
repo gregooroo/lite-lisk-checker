@@ -40,40 +40,34 @@ bot.on(['/start', '/hello'], (msg) => msg.reply.text(`Welcome! Here is your user
 
 
 bot.on(['/help'], (msg) => {
-    if (msg.from.id === telegramUserId) {
-        bot.sendMessage(telegramUserId, helpMessage).catch(e => {
-            console.log(e);
-        });
-    } else {
-        bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
-        msg.reply.text(authMessageError);
-    }
+  if (msg.from.id !== telegramUserId) {
+    bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
+    msg.reply.text(authMessageError);
+    return;
+  }
+
+  bot.sendMessage(telegramUserId, helpMessage).catch(e => console.error(e));
 });
 bot.on(['/checkAll'], (msg) => {
+  if (msg.from.id !== telegramUserId) {
+    bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
+    msg.reply.text(authMessageError);
+    return;
+  }
 
-    if (msg.from.id === telegramUserId) {
-        bot.sendMessage(telegramUserId, 'Checking nodes, if something is wrong I will send notification :)');
-        networks.forEach((node => {
-            monitors[node["name"]].checkNodes();
-        }));
-    } else {
-        bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
-        msg.reply.text(authMessageError);
-    }
+  bot.sendMessage(telegramUserId, 'Checking nodes, if something is wrong I will send notification :)');
+  networks.forEach(node => monitors[node.name].checkNodes());
 });
 bot.on(['/list'], (msg) => {
-    if (msg.from.id === telegramUserId) {
-        let reply;
-        nodesArray.forEach(node => {
-            reply = `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"}`;
-        });
-        bot.sendMessage(telegramUserId, reply).catch(e => {
-            console.log(e);
-        });
-    } else {
-        bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
-        msg.reply.text(authMessageError);
-    }
+  if (msg.from.id !== telegramUserId) {
+    bot.sendDocument(msg.from.id, 'https://media.giphy.com/media/jWOLrt5JSNyXS/giphy.gif');
+    msg.reply.text(authMessageError);
+    return;
+  }
+
+  let reply;
+    nodesArray.forEach(node => reply = `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"}`);
+    bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
 });
 
 // bot.on(/^\/check (.+)$/,(msg, props)=>{
