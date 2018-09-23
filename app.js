@@ -31,8 +31,8 @@ setInterval(() => {
 
 const helpMessage = `/help - List the available commands
 /checkAll - Tick all nodes from config
-/list - List nodes IDs`
-//"/check ID_FROM_CONFIG - Checking status of node and forging if enabled"
+/list - List nodes IDs
+/check ID_FROM_CONFIG - Checking status of node and forging if enabled in config.json`
 
 const authMessageError = "Seems you are not authorized to use this command :( Check your config file.";
 // Bot
@@ -66,12 +66,30 @@ bot.on(['/list'], (msg) => {
   }
 
   let reply;
-    nodesArray.forEach(node => reply = `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"}`);
+    nodesArray.forEach(node => reply = `ID: ${node.id} Forging watcher: ${node.checkForging ? "Enabled" : "Disabled"}`);
     bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
 });
 
-// bot.on(/^\/check (.+)$/,(msg, props)=>{
-//     const arg = props.match[1];
-//
-//
-// });
+bot.on(/^\/check (.+)$/, (msg, props) => {
+    const serverId = props.match[1];
+    let ifExist = false;
+    for (let i = 0; i < nodes.length; i++) {
+        if (nodes[i].id === serverId) {
+            ifExist = true;
+            const result = monitors[nodes[i].network].checkNode(serverId);
+            result.then(val => {
+                if (val) {
+                    bot.sendMessage(telegramUserId, val).catch(e => {
+                        console.log(e);
+                    });
+                }
+            });
+        }
+    }
+
+    if (!ifExist) {
+        bot.sendMessage(telegramUserId, "No such server in config: " + serverId).catch(e => {
+            console.log(e);
+        });
+    }
+});
