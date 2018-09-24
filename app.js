@@ -1,5 +1,5 @@
-const {nodes, interval, telegramUserId} = require('./config.json');
-const {networks} = require('./networks.json');
+const { nodes, interval, telegramUserId } = require('./config.json');
+const { networks } = require('./networks.json');
 const Node = require('./node.js');
 const Monitor = require('./monitor');
 const bot = require('./telegram');
@@ -8,25 +8,26 @@ const bot = require('./telegram');
 // Create monitors for specified networks
 
 const monitors = networks.reduce((acc, val) => {
-    acc[val.name] = new Monitor(val.name);
-    return acc;
+  acc[val.name] = new Monitor(val.name);
+  return acc;
 }, {});
 
 // Create nodes
-const nodesArray = nodes.map(node => new Node(node.id, node.ip, node.port, node.network, node.checkForging));
+const nodesArray = nodes.map(node => new Node(node.id, node.ip, node.port,
+  node.network, node.checkForging));
 
 
 // Add nodes to monitors
-nodesArray.forEach(node => {
-    monitors[node.network].addNode(node);
+nodesArray.forEach((node) => {
+  monitors[node.network].addNode(node);
 });
 
 
 // Tick monitors every N s
 setInterval(() => {
-    networks.forEach((node => {
-        monitors[node["name"]].checkNodes();
-    }));
+  networks.forEach(((node) => {
+    monitors[node.name].checkNodes();
+  }));
 }, interval * 1000);
 
 const helpMessage = `/help - List the available commands
@@ -34,9 +35,9 @@ const helpMessage = `/help - List the available commands
 /list - List nodes IDs
 /check ID_FROM_CONFIG - Checking status of node and forging if enabled in config.json`;
 
-const authMessageError = "Seems you are not authorized to use this command :( Check your config file.";
+const authMessageError = 'Seems you are not authorized to use this command :( Check your config file.';
 // Bot
-bot.on(['/start', '/hello'], (msg) => msg.reply.text(`Welcome! Here is your user id, for the security add this to config.json field telegramUserId: ${msg.from.id}`));
+bot.on(['/start', '/hello'], msg => msg.reply.text(`Welcome! Here is your user id, for the security add this to config.json field telegramUserId: ${msg.from.id}`));
 
 
 bot.on(['/help'], (msg) => {
@@ -65,31 +66,31 @@ bot.on(['/list'], (msg) => {
     return;
   }
 
-  let reply = "";
-    nodesArray.forEach(node => reply += `ID: ${node.id} Forging watcher: ${node.checkForging ? "Enabled" : "Disabled"} \r\n`);
-    bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
+  let reply = '';
+  nodesArray.forEach(node => reply += `ID: ${node.id} Forging watcher: ${node.checkForging ? 'Enabled' : 'Disabled'} \r\n`);
+  bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
 });
 
 bot.on(/^\/check (.+)$/, (msg, props) => {
-    const serverId = props.match[1];
-    let ifExist = false;
-    for (let i = 0; i < nodes.length; i++) {
-        if (nodes[i].id === serverId) {
-            ifExist = true;
-            const result = monitors[nodes[i].network].checkNode(serverId);
-            result.then(val => {
-                if (val) {
-                    bot.sendMessage(telegramUserId, val).catch(e => {
-                        console.log(e);
-                    });
-                }
-            });
-        }
-    }
-
-    if (!ifExist) {
-        bot.sendMessage(telegramUserId, `No such server in config:  ${serverId}`).catch(e => {
+  const serverId = props.match[1];
+  let ifExist = false;
+  for (let i = 0; i < nodes.length; i++) {
+    if (nodes[i].id === serverId) {
+      ifExist = true;
+      const result = monitors[nodes[i].network].checkNode(serverId);
+      result.then((val) => {
+        if (val) {
+          bot.sendMessage(telegramUserId, val).catch((e) => {
             console.log(e);
-        });
+          });
+        }
+      });
     }
+  }
+
+  if (!ifExist) {
+    bot.sendMessage(telegramUserId, `No such server in config:  ${serverId}`).catch((e) => {
+      console.log(e);
+    });
+  }
 });
