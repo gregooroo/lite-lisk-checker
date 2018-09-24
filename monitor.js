@@ -60,7 +60,7 @@ module.exports = class Monitor {
             if (i !== -1) {
                 // If node is unavailable alert user
                 const tmpLiskData = await axios.get(this.nodes[i]["ip"] + ":" + this.nodes[i]["port"] + '/api/node/status').catch(e => {
-                    this.alertUser('Server ' + this.nodes[i]["ip"] + ' disconnected').catch(e => {
+                    this.alertUser(`Server: ${this.nodes[i].id}, IP:  ${this.nodes[i].ip}  disconnected`).catch(e => {
                         console.log(e);
                     });
                 });
@@ -70,11 +70,11 @@ module.exports = class Monitor {
                     // If node is unsynced alert user
                     // The diff below should be 0...
                     if (bestBlock - yourNodeHeight > -3 && bestBlock - yourNodeHeight < 3) {
-                        console.log(Date(), " ", this.nodes[i].ip, " synced with network");
+                        console.log(`${Date()} ${this.nodes[i].ip} synced with network`);
 
                     } else {
 
-                        await this.alertUser('Server ' + this.nodes[i]["ip"] + ' unsynced, best height: ' + bestBlock + ' Your node: ' + yourNodeHeight + ' Diff: ' + (bestBlock - yourNodeHeight)).catch(e => {
+                        await this.alertUser(`Server:  ${this.nodes[i].id}, IP: ${this.nodes[i].ip}  unsynced, best height: ${bestBlock} Your node: ${yourNodeHeight} Diff: ${(bestBlock - yourNodeHeight)}`).catch(e => {
                             console.log(e);
 
                         });
@@ -82,25 +82,25 @@ module.exports = class Monitor {
                     //Check forging status if enabled
                     if (this.nodes[i]["checkForging"]) {
                         const forgingStatus = await axios.get(this.nodes[i]["ip"] + ":" + this.nodes[i]["port"] + '/api/node/status/forging').catch(e => {
-                            this.alertUser('Forging checking failed, check your node and publicKey: ' + this.nodes[i]["ip"]).catch(e => {
+                            this.alertUser(`Forging checking failed, check your node and publicKey:  ${this.nodes[i]["ip"]}`).catch(e => {
                                 console.log(e);
 
                             });
                         });
                         // With more public keys, it should check all
                         if (!forgingStatus.data.data[0].forging) {
-                            await this.alertUser('FORGING DISABLED ON: ' + this.nodes[i]["ip"]).catch(e => {
+                            await this.alertUser(`FORGING DISABLED ON: ${this.nodes[i].id}`).catch(e => {
                                 console.log(e);
 
                             });
                         } else {
-                            console.log(Date(), " ", this.nodes[i].ip, " forging enabled: ", forgingStatus.data.data[0].publicKey);
+                            console.log(`${Date()} ${this.nodes[i].ip} forging enabled: ${forgingStatus.data.data[0].publicKey}`);
                             return serverId + " synced, height: " + tmpLiskData.data.data.height + " Forging: " + (forgingStatus.data.data[0].forging ? "Enabled" : "Disabled");
                         }
                     }
                     return serverId + " synced, height: " + tmpLiskData.data.data.height;
                 } else {
-                    console.log('Server ' + this.nodes[i]["ip"] + ' disconnected');
+                    console.log(`Server ${this.nodes[i].id}  disconnected`);
 
                 }
             } else {
@@ -126,7 +126,7 @@ module.exports = class Monitor {
     async alertUser(mssg) {
 
         // Send telegram message to user
-        console.log("Error!: ", mssg, " Date: ", Date());
+        console.log(`Error!:  ${mssg} Date: ${Date()}`);
 
         await bot.sendMessage(telegramUserId, mssg).catch(e => {
             console.log("bot error");

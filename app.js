@@ -32,7 +32,7 @@ setInterval(() => {
 const helpMessage = `/help - List the available commands
 /checkAll - Tick all nodes from config
 /list - List nodes IDs
-/check ID_FROM_CONFIG - Checking status of node and forging if enabled in config.json`
+/check ID_FROM_CONFIG - Checking status of node and forging if enabled in config.json`;
 
 const authMessageError = "Seems you are not authorized to use this command :( Check your config file.";
 // Bot
@@ -66,7 +66,7 @@ bot.on(['/list'], (msg) => {
   }
 
   let reply = "";
-    nodesArray.forEach(node => reply += `ID: ${node.id} Forging: ${node.checkForging ? "Enabled" : "Disabled"} \r\n`);
+    nodesArray.forEach(node => reply += `ID: ${node.id} Forging watcher: ${node.checkForging ? "Enabled" : "Disabled"} \r\n`);
     bot.sendMessage(telegramUserId, reply).catch(e => console.error(e));
 });
 
@@ -88,7 +88,7 @@ bot.on(/^\/check (.+)$/, (msg, props) => {
     }
 
     if (!ifExist) {
-        bot.sendMessage(telegramUserId, "No such server in config: " + serverId).catch(e => {
+        bot.sendMessage(telegramUserId, `No such server in config:  ${serverId}`).catch(e => {
             console.log(e);
         });
     }
