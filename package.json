@@ -1,6 +1,6 @@
 {
   "name": "lite-lisk-checker",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Monitor Lisk",
   "main": "app.js",
   "scripts": {
@@ -12,6 +12,7 @@
   "author": "bioly",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "lisk-elements": "^1.0.0",
     "telebot": "^1.2.6"
   },
